@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualisation des Arbres</title>
+    <link rel="stylesheet" href="../CSS/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <p>
+                    <a href="https://www.saint-quentin.fr/"><img src="../images/stq.jpg" style="max-height: 75px; width: auto;"></a>
+                    <a href="https://isen-nantes.fr/"><img src="../images/ISEN.jpg" style="max-height: 75px; width: auto;"></a>
+                </p>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="add_tree.html">Ajouter un arbre</a></li>
+                <li><a href="view_tree.html">Visualisation des arbres</a></li>
+                <li><a href="https://fr.wikipedia.org/wiki/Saint-Quentin">En apprendre plus sur la ville</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="bg-image3">
+        <main>
+            <h1>Visualisation des Arbres</h1>
+            <a href="../IA/predict_age.html" id="predict-age" class="button_select">Prédire l'âge</a>
+            <a href="../IA/predict_deracinement.html" id="predict-age" class="button_select">Prédire le déracinement</a>
+            <div id="age-prediction"></div>
+            
+            <!-- Ajout de filtres -->
+            <h2>Filtres</h2>
+            <form id="filters">
+                <label for="species">Espèce:</label>
+                <input type="text" id="species" name="species">
+                
+                <label for="min-height">Hauteur Min (m):</label>
+                <input type="number" id="min-height" name="min-height">
+                
+                <label for="max-height">Hauteur Max (m):</label>
+                <input type="number" id="max-height" name="max-height">
+                
+                <label for="remarkable">Remarquable:</label>
+                <select id="remarkable" name="remarkable">
+                    <option value="">Tous</option>
+                    <option value="Oui">Oui</option>
+                    <option value="Non">Non</option>
+                </select>
+                
+                <button  id="apply-filters" class="apply-filters-btn filter-button type="button">Appliquer les filtres</button>
+            </form>
+            
+            <div id="table-container"></div>
+            <div id="pagination"></div> 
+            <h2>Carte de la répartition des arbres de la ville</h2>
+            <a href="#" id="predict_clusters" class="button_select">Prédire les clusters</a>
+
+                <script>
+                document.getElementById('predict_clusters').addEventListener('click', function(event) {
+                    event.preventDefault();
+                    //à modifier pour prédire le cluster d'un autre arbre
+                    var haut_tot = 6;
+                    var tronc_diam = 37;
+
+                    // Envoi de la requête AJAX POST
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', '../IA/predict_clusters.php', true);
+                    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    xhr.onreadystatechange = function() {
+                        if (xhr.readyState === 4 && xhr.status === 200) {
+                            // Afficher le résultat sur la page
+                            document.getElementById('cluster-prediction').innerHTML = "Cluster prédit : " + xhr.responseText;
+                        }
+                    };
+                    xhr.send('haut_tot=' + encodeURIComponent(haut_tot) + '&tronc_diam=' + encodeURIComponent(tronc_diam));
+                });
+                </script>
+
+<div id="cluster-prediction"></div>
+            <div id="map" style="width: 100%; height: 600px;"></div>
+        </main> 
+    </div>
+    <footer>
+        <p>&copy; 2024 Groupe 4 CSI 3 2023-2024
+            <a href="https://www.linkedin.com/in/arthur-grossmann-le-mauguen-45094b205/"><img src="../images/linkedin.jpg" style="max-width: 25px; height: auto;"> Arthur GROSSMANN--LE MAUGEN </a>
+            <a href="https://www.linkedin.com/in/enzo-guillard-851740314/"><img src="../images/linkedin.jpg" style="max-width: 25px; height: auto;"> Enzo GUILLARD </a>
+            <a href="https://www.linkedin.com/in/lucas-bercegeay-662a79315/"><img src="../images/linkedin.jpg" style="max-width: 25px; height: auto;"> Lucas BERCEGEAY </a>
+        </p>   
+    </footer>
+    <div class="custom-cursor"></div>
+
+    <script src="../JS/script.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../JS/view_tree2bis.js"></script>
+</body>
+</html>
