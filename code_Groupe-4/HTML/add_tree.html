@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter un nouvel arbre</title>
+    <link rel="stylesheet" href="../CSS/styles.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <p><a href="https://www.saint-quentin.fr/"> <img src="../images/stq.jpg" style="max-height: 75px; width: auto;"></a>
+                <a href="https://isen-nantes.fr/"> <img src="../images/ISEN.jpg" style="max-height: 75px; width: auto;"></a></p>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="add_tree.html">Ajouter un arbre</a></li>
+                <li><a href="view_tree.html">Visualisation des arbres</a></li>
+                <li><a href="https://fr.wikipedia.org/wiki/Saint-Quentin">En apprendre plus sur la ville</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="bg-image2">
+        <main>
+            <h1>Authentification</h1>
+            <form id="authForm" action="../PHP/authenticate.php" method="POST">
+                <div>
+                    <label for="username">Nom d'utilisateur :</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div>
+                    <label for="password">Mot de passe :</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div>
+                    <button type="submit" class="login-btn">Se connecter</button>
+                </div>
+            </form>
+            <h1>Ajouter un nouvel arbre</h1>
+            
+            <div class="container">
+                
+                <form id="addTreeForm" action="../PHP/ajout_arbre.php" method="POST">
+
+                    <div class="progress">
+                        <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <div>
+                        <label for="species">Espèce :</label>
+                        <input type="text" id="species" name="species" required placeholder="Ex: TILCOR">
+                    </div>
+                    <div>
+                        <label for="total_height">Hauteur totale (m) :</label>
+                        <input type="number" step="0.25" id="total_height" name="total_height" min="0" max="50" required placeholder="6.0">
+                    </div>
+                    <div>
+                        <label for="trunk_height">Hauteur du tronc (m) :</label>
+                        <input type="number" step="0.25" id="trunk_height" name="trunk_height" min="0" max="50" required placeholder="3.0">
+                    </div>
+                    <div>
+                        <label for="trunk_diameter">Diamètre du tronc (cm) :</label>
+                        <input type="number" step="0.25" id="trunk_diameter" name="trunk_diameter" min="0" max="750" required placeholder="100.0">
+                    </div>
+                    <div>
+                        <label for="remarkable">Arbre remarquable :</label>
+                        <input type="checkbox" id="remarkable" name="remarkable">
+                    </div>
+                    <div class="form-row">
+                        <div>
+                            <label for="latitude">Latitude :</label>
+                            <input type="number" step="0.000001" id="latitude" name="latitude" min="49.8" max="49.95" required placeholder="Ex: 49.84">
+                        </div>
+                        <div>
+                            <label for="longitude">Longitude :</label>
+                            <input type="number" step="0.000001" id="longitude" name="longitude" min="3.1" max="3.46" required placeholder="Ex: 3.29">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="status">État de l'arbre :</label>
+                        <select id="status" name="status" required>
+                            <option value="">Sélectionner un état</option>
+                            <option value="en place">en place</option>
+                            <option value="essouché">essouché</option>
+                            <option value="non essouché">non essouché</option>
+                            <option value="remplacé">remplacé</option>
+                            <option value="supprimé">supprimé</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="development_stage">Stade de développement :</label>
+                        <select id="development_stage" name="development_stage" required>
+                            <option value="">Sélectionner un stade de développement</option>
+                            <option value="vieux">vieux</option>
+                            <option value="jeune">jeune</option>
+                            <option value="adulte">adulte</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="port_type">Type de port :</label>
+                        <select id="port_type" name="port_type" required>
+                            <option value="">Sélectionner un type de port</option>
+                            <option value="céppée">céppée</option>
+                            <option value="étêté">étêté</option>
+                            <option value="libre">libre</option>
+                            <option value="réduit">réduit</option>
+                            <option value="réduit relâché">réduit relâché</option>
+                            <option value="rideau">rideau</option>
+                            <option value="semi libre">semi libre</option>
+                            <option value="tête de chat">tête de chat</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="foot_type">Type de pied :</label>
+                        <select id="foot_type" name="foot_type" required>
+                            <option value="">Sélectionner un type de pied</option>
+                            <option value="bande de terre">bande de terre</option>
+                            <option value="fosse arbre">fosse arbre</option>
+                            <option value="gazon">gazon</option>
+                            <option value="terre">terre</option>
+                        </select>
+                    </div>
+                    <div>
+                        <button type="submit">Ajouter l'arbre</button>
+                    </div>
+                </form>
+                <div class="slider-container">
+                    <h2>Sliders</h2>
+                    <div class="slider" id="totalHeightSlider"></div>
+                    <div class="slider" id="trunkHeightSlider"></div>
+                    <div class="slider" id="trunkDiameterSlider"></div>
+                </div>
+                <div id="map"></div>
+            </div>
+        </main>
+    </div>
+    <footer>
+        <p>&copy; 2024 Groupe 4 CSI 3 2023-2024
+            <a href="https://www.linkedin.com/in/arthur-grossmann-le-mauguen-45094b205/"> <img src="../images/linkedin.jpg" style="max-width: 25px; height: auto;"> Arthur GROSSMANN--LE MAUGEN </a>
+            <a href="https://www.linkedin.com/in/enzo-guillard-851740314/"> <img src="../images/linkedin.jpg" style="max-width: 25px; height: auto;"> Enzo GUILLARD </a>
+            <a href="https://www.linkedin.com/in/lucas-bercegeay-662a79315/"> <img src="../images/linkedin.jpg" style="max-width: 25px; height: auto;"> Lucas BERCEGEAY </a></p>   
+    </footer>
+    <div class="custom-cursor"></div>
+
+    <script src="../JS/script.js"></script>
+    <script src="../JS/add_tree.js"></script>
+</body>
+</html>
